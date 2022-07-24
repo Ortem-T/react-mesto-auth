@@ -34,7 +34,8 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.getUserInfo()
+    if (loggedIn) {
+      api.getUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
       })
@@ -42,14 +43,15 @@ function App() {
         console.log(`Ошибка: ${err}`);
       });
 
-    api.getInitialCards()
-      .then((initialCards) => {
-        setCards(initialCards);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      });
-  }, [])
+      api.getInitialCards()
+        .then((initialCards) => {
+          setCards(initialCards);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    }
+  }, [loggedIn])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true)
@@ -140,16 +142,15 @@ function App() {
 
   function handleRegister(password, email) {
     auth.register(password, email)
-      .then((res) => {
-
+      .then(() => {
         setIsInfoTooltipOpen(true);
-        if (!res || res.error) {
-          setIsInfoTooltipOpen(true);
-          setMessage(false);
-        } else {
-          setMessage(true);
-          navigate('/sign-in');
-        }
+        setMessage(true);
+        navigate('/sign-in');
+      })
+      .catch((err) => {
+        setMessage(false);
+        setIsInfoTooltipOpen(true);
+        console.log(`Ошибка регистрации. ${err}`);
       })
   }
 
@@ -162,6 +163,11 @@ function App() {
           navigate('/');
         }
       })
+      .catch((err) => {
+        setMessage(false);
+        setIsInfoTooltipOpen(true);
+        console.log(`Невозможно войти. ${err}`);
+      })
   }
 
   function checkToken() {
@@ -169,14 +175,13 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          if (!res || res.message) {
-            setLoggedIn(false);
-          } else {
-            setLoggedIn(true);
-            navigate('/');
-            setUserEmail(res.data.email)
-          }
+          setLoggedIn(true);
+          navigate('/');
+          setUserEmail(res.data.email)
         })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }
 
