@@ -22,6 +22,7 @@ function EditAvatarPopup(props) {
             onClose={props.onClose}
             onSubmit={handleSubmit}
             buttonText='Сохранить'
+            title='Обновить аватар'
         >
             <div className="form__field">
                 <input className="form__input form__input_type_avatar" type="url" placeholder="Ссылка на картинку" 

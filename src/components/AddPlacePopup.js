@@ -33,6 +33,7 @@ function AddPlacePopup(props) {
             onClose={props.onClose}
             onSubmit={handleSubmit}
             buttonText='Создать'
+            title='Новое место'
         >
             <div className="form__field">
                 <input className="form__input form__input_type_title-img" type="text" placeholder="Название"
