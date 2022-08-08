@@ -1,5 +1,6 @@
 # Место на «React» <img src="https://media.giphy.com/media/hUL5gdlvDgtRbOElZS/giphy.gif" width="96px" height="56px" alt="React-gif"> 
 ### *Учебный проект от Яндекс.Практикум*
+## Ссылка на проект: https://ortem-t.github.io/react-mesto-auth/
 
 ## Описание проекта
 Место - это интерактивная страница, на которой пользователи могут делиться фотографиями, удалять их и ставить лайки. 
